@@ -1,0 +1,18 @@
+
+SELECT DATE_FORMAT(DATE_SUB(LAST_DAY(NOW()), INTERVAL xc DAY), '%Y-%m-%d') as date
+FROM ( 
+			SELECT @xi:=@xi+1 as xc from 
+			(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) xc1, 
+			(SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6) xc2,  
+			(SELECT @xi:=-1) xc0 
+) xcxc
+WHERE xc <= DAYOFMONTH(LAST_DAY(NOW())) 
+AND DATE_FORMAT(NOW(), '%Y-%m') = DATE_FORMAT(DATE_SUB(LAST_DAY(NOW()), INTERVAL xc DAY), '%Y-%m')
+AND DATE_FORMAT(DATE_FORMAT(DATE_SUB(LAST_DAY(NOW()), INTERVAL xc DAY), '%Y-%m-%d'), '%w') NOT IN (0, 6)
+
+参考以下大神改的
+--------------------- 
+作者：世界和平 
+来源：CSDN 
+原文：https://blog.csdn.net/qiuli_liu/article/details/81707562 
+版权声明：本文为博主原创文章，转载请附上博文链接！
